@@ -1,21 +1,18 @@
 import { Module } from '@nestjs/common';
-import { FundsController } from './funds.controller';
-import { FundsService } from './funds.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { Fund } from './funds/entities/fund.entity';
-import { Document } from './funds/entities/document.entity';
-import { PortfolioAsset } from './funds/entities/portfolio-asset.entity';
-import { TopHolding } from './funds/entities/holding.entity';
-import { FundsModule } from './funds/funds.module';
-
+import { Funds } from './entities/funds.entity';
+import { Documents } from './entities/documents.entity';
+import { PortfolioAssets } from './entities/portfolioAssets.entity';
+import { Holdings } from './entities/holdings.entity';
+import { FundsModule } from './funds.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    // Async config so we can read env vars
+    // DB set up
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
@@ -26,14 +23,12 @@ import { FundsModule } from './funds/funds.module';
         password: config.get<string>('DB_PASSWORD'),
         database: config.get<string>('DB_NAME'),
 
-        entities: [Fund, Document, PortfolioAsset, holdings],
+        entities: [Funds, Documents, PortfolioAssets, Holdings],
 
-        synchronize: true, // dev only
+        synchronize: true,
       }),
     }),
     FundsModule,
   ],
-  controllers: [FundsController],
-  providers: [FundsService],
 })
 export class AppModule {}
