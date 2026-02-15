@@ -7,6 +7,8 @@ import { PortfolioAssets } from './entities/portfolioAssets.entity';
 import { Holdings } from './entities/holdings.entity';
 import { FundsService } from './funds.service';
 import { FundsController } from './funds.controller';
+import { AllFundsService } from './allFunds.service';
+import { FundService } from './fund.service';
 
 @Module({
   imports: [
@@ -14,6 +16,6 @@ import { FundsController } from './funds.controller';
   ],
   controllers: [FundsController],
   exports: [FundsService],
-  providers: [FundsService],
+  providers: [FundsService, AllFundsService, FundService],
 })
 export class FundsModule {}
