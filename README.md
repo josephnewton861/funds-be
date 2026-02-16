@@ -1,98 +1,79 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Funds Management API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is a **NestJS**-based backend API for managing fund data, preloading financial information from external sources into a hosted **PostgreSQL** database. It demonstrates clean architecture, TypeORM integration, and service-based design.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Technologies Used
 
-## Description
+- **NestJS** – Modern Node.js framework for building scalable server-side applications. (Not used before this tech test)
+- **TypeORM** – Object Relational Mapping with PostgreSQL support.
+- **PostgreSQL** – Hosted relational database storing funds, documents, holdings, and portfolio assets.
+- **Axios** – HTTP client for fetching external fund data.
+- **Jest** – Unit testing framework for services and controllers.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## API Endpoints
 
-## Project setup
+| Method | Route             | Description                                                                 |
+|--------|-----------------|-----------------------------------------------------------------------------|
+| GET    | `http://localhost:3000//preload`       | Preloads fund data from external APIs into the database. Logs any errors. |
+| GET    | `http://localhost:3000//funds`         | Returns all funds stored in the database.                                  |
+| GET    | `http://localhost:3000//funds/:id`     | Returns a single fund by ID, including associated documents, holdings, and portfolio assets. |
 
-```bash
-$ npm install
-```
+> **Note:** The preload endpoint currently runs on-demand but is intended for future automation.
 
-## Compile and run the project
+---
 
-```bash
-# development
-$ npm run start
+## Database
 
-# watch mode
-$ npm run start:dev
+The API is connected to a **hosted PostgreSQL database** using TypeORM. The database contains the following entities:
 
-# production mode
-$ npm run start:prod
-```
+- **Funds** – Main fund data including name, market code, price, sector, and ratings.  
+- **Documents** – Associated fund documents with type and URL.  
+- **Holdings** – Top holdings for each fund.  
+- **PortfolioAssets** – Asset allocations for each fund.
 
-## Run tests
+All entities are relationally linked and support cascading updates.
 
-```bash
-# unit tests
-$ npm run test
+---
 
-# e2e tests
-$ npm run test:e2e
+## Future Improvements
 
-# test coverage
-$ npm run test:cov
-```
+- **Automated Preloading** – Schedule the `/preload` process using a **cron job** to run daily, keeping the database up-to-date.  
+- **Secure Fund Insertion** – Add a **PUT `/funds`** endpoint to allow adding new funds manually.  
+  - **Authentication required** – To prevent unauthorized data insertion, only authorized users should be able to use this endpoint.  
+- **Enhanced Validation** – Add stricter validation for API responses and database constraints.  
+- **API Documentation** – Integrate **Swagger** for clearer endpoint documentation.  
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## Testing
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+- Unit tests cover **services** and **controllers** using Jest.  
+- Axios calls are mocked to ensure tests do not hit external APIs.  
+- Repository operations are mocked to isolate service logic.
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+---
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Getting Started
 
-## Resources
+1. **Clone the repository**
+   
+  `git clone <repo-url>`
+  `cd <repo-folder>`
 
-Check out a few resources that may come in handy when working with NestJS:
+2. **Create the .env file and insert the following**
+## Environment Variables
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+The following `.env` variables are required to run the application:
+DB_HOST=ep-noisy-rice-abyfjgw2-pooler.eu-west-2.aws.neon.tech
+DB_PORT=5432
+DB_USERNAME=neondb_owner
+DB_PASSWORD=npg_Jxkp9jSXILe8
+DB_NAME=funds_dashboard
+BASE_URL=https://cdn.core3-dev.ajbbuild.uk/interview
 
-## Support
+3. **Install dependencies**
+  `npm install`
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+4. **Run tests**
+  `npm run test`
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
