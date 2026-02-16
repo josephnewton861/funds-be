@@ -14,8 +14,8 @@ export class Documents {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true, length: 30 })
-  type: string;
+  @Column({ type: 'varchar', nullable: true, length: 30 })
+  type: string | null;
 
   @Column({ length: 255 })
   url: string;

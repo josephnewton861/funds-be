@@ -17,7 +17,7 @@ export class Holdings {
   @Column({ length: 100 })
   name: string;
 
-  @Column('decimal', { precision: 10, scale: 5, nullable: true })
+  @Column('decimal', { precision: 10, scale: 5 })
   weighting: number;
 
   @ManyToOne(() => Funds, (fund) => fund.holdings, { onDelete: 'CASCADE' })

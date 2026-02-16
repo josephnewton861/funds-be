@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Funds } from './entities/funds.entity';
+import { Funds } from '../entities/funds.entity';
 
 @Injectable()
 export class FundService {
@@ -11,7 +11,7 @@ export class FundService {
   ) {}
 
   async getFund(id?: number) {
-    // Fetch all funds and join the related tables
+    // Fetch one fund and join the related tables
     const fund = await this.fundsRepository.findOne({
       where: { id },
       relations: ['documents', 'holdings', 'portfolioAssets'],

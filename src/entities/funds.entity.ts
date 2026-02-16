@@ -34,15 +34,14 @@ export class Funds {
       from: (value: string) => parseFloat(value),
     },
   })
-  lastPrice: number;
+  lastPrice: number | null;
 
   @Column({ type: 'date', nullable: true })
-  lastPriceDate: string;
+  lastPriceDate: Date | null;
 
   @Column('decimal', {
     precision: 5,
     scale: 2,
-    nullable: true,
     transformer: {
       to: (value: number) => value,
       from: (value: string) => parseFloat(value),
@@ -50,23 +49,23 @@ export class Funds {
   })
   ongoingCharge: number;
 
-  @Column({ nullable: true, length: 100 })
-  sectorName: string;
+  @Column({ type: 'varchar', nullable: true, length: 100 })
+  sectorName: string | null;
 
   @Column({ length: 10 })
   currency: string;
 
-  @Column({ length: 1000, nullable: true })
-  objective: string;
+  @Column({ type: 'varchar', length: 1000, nullable: true })
+  objective: string | null;
 
-  @Column({ nullable: true })
-  analystRating: number;
+  @Column({ type: 'int', nullable: true })
+  analystRating: number | null;
 
-  @Column({ nullable: true })
-  srri: number;
+  @Column({ type: 'int', nullable: true })
+  srri: number | null;
 
-  @Column({ nullable: true, length: 50 })
-  analystRatingLabel: string;
+  @Column({ type: 'varchar', nullable: true, length: 50 })
+  analystRatingLabel: string | null;
 
   @OneToMany(() => Documents, (document) => document.fund, { cascade: true })
   @JoinColumn({ name: 'fundId' })
