@@ -1,4 +1,9 @@
-import { Controller, Get, InternalServerErrorException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  InternalServerErrorException,
+  Param,
+} from '@nestjs/common';
 import { FundsService } from './funds.service';
 import { AllFundsService } from './allFunds.service';
 import { FundService } from './fund.service';
@@ -32,13 +37,13 @@ export class FundsController {
   }
 
   @Get('/funds/:id')
-  async loadFundById(id: number) {
+  async loadFundById(@Param() params: { id: string }) {
     try {
+      const id = parseInt(params.id, 10);
       const fund = await this.fundService.getFund(id);
       return fund;
     } catch (err) {
       throw new InternalServerErrorException('Failed to fetch fund by ID');
     }
-    // Implementation for fetching a single fund by ID can be added here
   }
 }
