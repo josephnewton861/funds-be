@@ -18,8 +18,6 @@ This project is a **NestJS**-based backend API for managing fund data, preloadin
 | GET    | `http://localhost:3000/funds`         | Returns all funds stored in the database.                                  |
 | GET    | `http://localhost:3000/funds/:id`     | Returns a single fund by ID, including associated documents, holdings, and portfolio assets. |
 
-> **Note:** The preload endpoint currently runs on-demand but is intended for future automation.
-
 ---
 
 ## Database
