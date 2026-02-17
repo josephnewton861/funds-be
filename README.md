@@ -77,3 +77,6 @@ BASE_URL=https://cdn.core3-dev.ajbbuild.uk/interview
 4. **Run tests**
   `npm run test`
 
+5. **Start backend api**
+  `nest start`
+
