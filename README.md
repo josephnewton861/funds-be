@@ -14,9 +14,9 @@ This project is a **NestJS**-based backend API for managing fund data, preloadin
 
 | Method | Route             | Description                                                                 |
 |--------|-----------------|-----------------------------------------------------------------------------|
-| GET    | `http://localhost:3000//preload`       | Preloads fund data from external APIs into the database. Logs any errors. |
-| GET    | `http://localhost:3000//funds`         | Returns all funds stored in the database.                                  |
-| GET    | `http://localhost:3000//funds/:id`     | Returns a single fund by ID, including associated documents, holdings, and portfolio assets. |
+| GET    | `http://localhost:3000/preload`       | Preloads fund data from external APIs into the database. Logs any errors. |
+| GET    | `http://localhost:3000/funds`         | Returns all funds stored in the database.                                  |
+| GET    | `http://localhost:3000/funds/:id`     | Returns a single fund by ID, including associated documents, holdings, and portfolio assets. |
 
 > **Note:** The preload endpoint currently runs on-demand but is intended for future automation.
 
@@ -40,7 +40,6 @@ All entities are relationally linked and support cascading updates.
 - **Automated Preloading** – Schedule the `/preload` process using a **cron job** to run daily, keeping the database up-to-date.  
 - **Secure Fund Insertion** – Add a **PUT `/funds`** endpoint to allow adding new funds manually.  
   - **Authentication required** – To prevent unauthorized data insertion, only authorized users should be able to use this endpoint.  
-- **Enhanced Validation** – Add stricter validation for API responses and database constraints.  
 - **API Documentation** – Integrate **Swagger** for clearer endpoint documentation.  
 
 ---
@@ -64,15 +63,16 @@ All entities are relationally linked and support cascading updates.
 ## Environment Variables
 
 The following `.env` variables are required to run the application:
-DB_HOST=ep-noisy-rice-abyfjgw2-pooler.eu-west-2.aws.neon.tech
-DB_PORT=5432
-DB_USERNAME=neondb_owner
-DB_PASSWORD=npg_Jxkp9jSXILe8
-DB_NAME=funds_dashboard
-BASE_URL=https://cdn.core3-dev.ajbbuild.uk/interview
+- `DB_HOST=ep-noisy-rice-abyfjgw2-pooler.eu-west-2.aws.neon.tech`
+- `DB_PORT=5432`
+- `DB_USERNAME=neondb_owner`
+- `DB_PASSWORD=npg_Jxkp9jSXILe8`
+- `DB_NAME=funds_dashboard`
+- `BASE_URL=https://cdn.core3-dev.ajbbuild.uk/interview`
 
 3. **Install dependencies**
   `npm install`
+  `npm install axios`
 
 4. **Run tests**
   `npm run test`
