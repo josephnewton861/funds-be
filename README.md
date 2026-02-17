@@ -58,7 +58,6 @@ All entities are relationally linked and support cascading updates.
   `cd <repo-folder>`
 
 2. **Create the .env file and insert the following**
-## Environment Variables
 
 The following `.env` variables are required to run the application:
 - `DB_HOST=ep-noisy-rice-abyfjgw2-pooler.eu-west-2.aws.neon.tech`
@@ -70,7 +69,6 @@ The following `.env` variables are required to run the application:
 
 3. **Install dependencies**
   `npm install`
-  `npm install axios`
 
 4. **Run tests**
   `npm run test`
